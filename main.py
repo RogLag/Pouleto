@@ -39,9 +39,9 @@ async def on_ready():
     await channel_connected.send(embed=embed)
 
 @bot.tree.command(name="add_alliances", description="Add a new alliance in the database.")
-async def add_alliances(interaction: discord.Interaction, alliance: str, channel: int):
+async def add_alliances(interaction: discord.Interaction, alliance: str, channel: str):
     await interaction.response.defer(ephemeral=True)
-    if interaction.user.name == "Rog":
+    if interaction.user.name == "Rog" or interaction.user.name == "Le_Poulet":
         db, base = await db_link('Pouleto.db')
         db.execute(f"INSERT INTO Alliances (Name, Channel) VALUES ('{alliance}', '{channel}')")
         base.commit()
@@ -67,7 +67,6 @@ async def add(interaction: discord.Interaction, discord_pseudo_and_tags: str, mi
         members = await db_get('Pouleto.db', 'Players', 'Alliance', Alliance[0][0], 'Minecraft')
         for member in members:
             message += f"   - {member[0]}\n"
-        message += "\n\n@everyone"
         await message_sender(channel, message)
 
 @bot.tree.command(name="remove", description="Remove a player from a alliance.")
@@ -88,7 +87,6 @@ async def remove(interaction: discord.Interaction, discord_pseudo_and_tags: str,
         members = await db_get('Pouleto.db', 'Players', 'Alliance', Alliance[0][0], 'Minecraft')
         for member in members:
             message += f"   - {member[0]}\n"
-        message += "\n\n@everyone"
         await message_sender(channel, message)
     
 @bot.tree.command(name="db", description="Show the database.")
@@ -132,4 +130,4 @@ async def help(interaction: discord.Interaction, parameters: str):
         embed.add_field(name="!info", value="Info about the bot.", inline=False)
         await interaction.followup.send(embed=embed)
 
-bot.run('Token')
+bot.run('MTA2NTkzOTk1MTY5NjQ5MDU4Nw.GSoUhU.YrlyLfW6am3By1VRiKkbQX6YyRBkFkrXxiZfvE')
